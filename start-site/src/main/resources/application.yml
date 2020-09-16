@@ -4,6 +4,10 @@ logging:
     org.springframework.jndi: warn
 
 server:
+  port: 19080
+  jetty:
+    acceptors: 2
+    selectors: 4
   compression:
     enabled: true
     mime-types: application/json,text/css,text/html
