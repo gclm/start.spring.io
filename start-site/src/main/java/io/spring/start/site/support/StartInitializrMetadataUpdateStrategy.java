@@ -16,16 +16,16 @@
 
 package io.spring.start.site.support;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.spring.initializr.generator.version.Version;
 import io.spring.initializr.metadata.DefaultMetadataElement;
 import io.spring.initializr.web.support.InitializrMetadataUpdateStrategy;
 import io.spring.initializr.web.support.SpringIoInitializrMetadataUpdateStrategy;
-
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * An {@link InitializrMetadataUpdateStrategy} that performs additional filtering of
@@ -35,20 +35,24 @@ import org.springframework.web.client.RestTemplate;
  */
 public class StartInitializrMetadataUpdateStrategy extends SpringIoInitializrMetadataUpdateStrategy {
 
-	public StartInitializrMetadataUpdateStrategy(RestTemplate restTemplate, ObjectMapper objectMapper) {
-		super(restTemplate, objectMapper);
-	}
+    public static final List<String> IGNORE_VERSION = Arrays.asList("SNAPSHOT", "M");
 
-	@Override
-	protected List<DefaultMetadataElement> fetchSpringBootVersions(String url) {
-		List<DefaultMetadataElement> versions = super.fetchSpringBootVersions(url);
-		return (versions != null) ? versions.stream().filter(this::isCompatibleVersion).collect(Collectors.toList())
-				: null;
-	}
+    public StartInitializrMetadataUpdateStrategy(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        super(restTemplate, objectMapper);
+    }
 
-	private boolean isCompatibleVersion(DefaultMetadataElement versionMetadata) {
-		Version version = Version.parse(versionMetadata.getId());
-		return (version.getMajor() == 2 && version.getMinor() > 6) || (version.getMajor() >= 3);
-	}
+    @Override
+    protected List<DefaultMetadataElement> fetchSpringBootVersions(String url) {
+        List<DefaultMetadataElement> versions = super.fetchSpringBootVersions(url);
+        return (versions != null) ? versions.stream().filter(this::isCompatibleVersion).collect(Collectors.toList())
+                : null;
+    }
+
+    private boolean isCompatibleVersion(DefaultMetadataElement versionMetadata) {
+        Version version = Version.parse(versionMetadata.getId());
+        return null == version.getQualifier();
+
+//        return (version.getMajor() == 2 && version.getMinor() > 6) || (version.getMajor() >= 3);
+    }
 
 }

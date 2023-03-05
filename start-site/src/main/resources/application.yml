@@ -22,6 +22,7 @@ server:
   error:
     include-message: always
   forward-headers-strategy: native
+  port: 18988
 
 spring:
   jackson:
@@ -142,7 +143,7 @@ initializr:
         groupId: io.pivotal.spring.cloud
         artifactId: spring-cloud-services-dependencies
         versionProperty: spring-cloud-services.version
-        additionalBoms: [spring-cloud]
+        additionalBoms: [ spring-cloud ]
         mappings:
           - compatibilityRange: "[2.3.0.RELEASE,2.4.0-M1)"
             version: 2.3.0.RELEASE
@@ -350,13 +351,13 @@ initializr:
           id: web-services
           description: Facilitates contract-first SOAP development. Allows for the creation of flexible web services using one of the many ways to manipulate XML payloads.
           aliases:
-           - ws
+            - ws
           links:
-           - rel: guide
-             href: https://spring.io/guides/gs/producing-web-service/
-             description: Producing a SOAP web service
-           - rel: reference
-             href: https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#io.webservices
+            - rel: guide
+              href: https://spring.io/guides/gs/producing-web-service/
+              description: Producing a SOAP web service
+            - rel: reference
+              href: https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#io.webservices
         - name: Jersey
           id: jersey
           description: Framework for developing RESTful Web Services in Java that provides support for JAX-RS APIs.
@@ -1574,9 +1575,9 @@ initializr:
     - id: 19
       default: false
     - id: 17
-      default: true
-    - id: 11
       default: false
+    - id: 11
+      default: true
     - id: 1.8
       name: 8
       default: false
@@ -1586,23 +1587,22 @@ initializr:
       default: true
     - name: Kotlin
       id: kotlin
-      default: false
     - name: Groovy
       id: groovy
-      default: false
   bootVersions:
-    - name : 3.0.3 (SNAPSHOT)
-      id: 3.0.3-SNAPSHOT
-      default: false
-    - name : 3.0.2
+    - name: 3.0.2
       id: 3.0.2
+    - name: 2.7.9
+      id: 2.7.9
+    - name: 2.6.14
+      id: 2.6.14
       default: true
-    - name : 2.7.9 (SNAPSHOT)
-      id: 2.7.9-SNAPSHOT
-      default: false
-    - name : 2.7.8
-      id: 2.7.8
-      default: false
+    - name: 2.5.14
+      id: 2.5.14
+    - name: 2.4.2
+      id: 2.4.2
+    - name: 2.3.12.RELEASE
+      id: 2.3.12.RELEASE
 
 ---
 
