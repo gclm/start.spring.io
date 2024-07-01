@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package io.spring.start.site.extension.dependency.springboot;
+package io.spring.start.site.extension.dependency.sbom;
 
-import io.spring.initializr.generator.buildsystem.gradle.GradleBuild;
+import io.spring.initializr.generator.buildsystem.maven.MavenBuild;
+import io.spring.initializr.generator.spring.build.BuildCustomizer;
 
 /**
- * {@link PaketoBuilderBuildCustomizer} for Gradle with the Kotlin DSL.
+ * {@link BuildCustomizer} that adds the CycloneDX Maven plugin.
  *
- * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
-class PaketoBuilderKotlinDslGradleBuildCustomizer extends PaketoBuilderBuildCustomizer<GradleBuild> {
+class SbomCycloneDxMavenBuildCustomizer implements BuildCustomizer<MavenBuild> {
 
 	@Override
-	protected void customize(GradleBuild build, String imageBuilder) {
-		build.tasks().customize("bootBuildImage", (task) -> task.invoke("builder.set", "\"" + imageBuilder + "\""));
+	public void customize(MavenBuild build) {
+		build.plugins().add("org.cyclonedx", "cyclonedx-maven-plugin");
 	}
 
 }

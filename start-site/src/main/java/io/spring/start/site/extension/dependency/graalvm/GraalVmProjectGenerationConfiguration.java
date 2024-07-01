@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,15 +69,9 @@ class GraalVmProjectGenerationConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnBuildSystem(value = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_GROOVY)
-	GraalVmGroovyDslGradleBuildCustomizer graalVmGroovyDslGradleBuildCustomizer() {
-		return new GraalVmGroovyDslGradleBuildCustomizer(this.nbtVersion.get());
-	}
-
-	@Bean
-	@ConditionalOnBuildSystem(value = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_KOTLIN)
-	GraalVmKotlinDslGradleBuildCustomizer graalVmKotlinDslGradleBuildCustomizer() {
-		return new GraalVmKotlinDslGradleBuildCustomizer(this.nbtVersion.get());
+	@ConditionalOnBuildSystem(GradleBuildSystem.ID)
+	GraalVmGradleBuildCustomizer graalVmGradleBuildCustomizer() {
+		return new GraalVmGradleBuildCustomizer(this.nbtVersion.get());
 	}
 
 	@Bean
@@ -103,17 +97,10 @@ class GraalVmProjectGenerationConfiguration {
 		}
 
 		@Bean
-		@ConditionalOnBuildSystem(value = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_GROOVY)
-		HibernatePluginGroovyDslGradleBuildCustomizer hibernatePluginGroovyDslGradleBuildCustomizer(
+		@ConditionalOnBuildSystem(GradleBuildSystem.ID)
+		HibernatePluginGradleBuildCustomizer hibernatePluginGroovyDslGradleBuildCustomizer(
 				MavenVersionResolver versionResolver) {
-			return new HibernatePluginGroovyDslGradleBuildCustomizer(determineHibernateVersion(versionResolver));
-		}
-
-		@Bean
-		@ConditionalOnBuildSystem(value = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_KOTLIN)
-		HibernatePluginKotlinDslGradleBuildCustomizer hibernatePluginKotlinDslGradleBuildCustomizer(
-				MavenVersionResolver versionResolver) {
-			return new HibernatePluginKotlinDslGradleBuildCustomizer(determineHibernateVersion(versionResolver));
+			return new HibernatePluginGradleBuildCustomizer(determineHibernateVersion(versionResolver));
 		}
 
 		private Version determineHibernateVersion(MavenVersionResolver versionResolver) {

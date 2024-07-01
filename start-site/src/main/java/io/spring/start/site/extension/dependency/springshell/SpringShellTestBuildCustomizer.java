@@ -14,35 +14,27 @@
  * limitations under the License.
  */
 
-package io.spring.start.site.extension.dependency.picocli;
+package io.spring.start.site.extension.dependency.springshell;
 
 import io.spring.initializr.generator.buildsystem.Build;
 import io.spring.initializr.generator.buildsystem.Dependency;
 import io.spring.initializr.generator.buildsystem.DependencyScope;
 import io.spring.initializr.generator.spring.build.BuildCustomizer;
-import io.spring.initializr.generator.version.VersionReference;
 
 /**
- * A {@link BuildCustomizer} that automatically adds "picocli-codegen" when the
- * {@code native} dependency is selected in addition to {@code picocli}.
- * <p>
- * This annotation processor is required by Picocli to generate the reachability metadata
- * for native applications.
+ * A {@link BuildCustomizer} that automatically adds {@code spring-shell-test} when Spring
+ * Shell is selected.
  *
- * @author Brian Clozel
+ * @author DaShaun Carter
  */
-class PicocliCodegenBuildCustomizer implements BuildCustomizer<Build> {
+public class SpringShellTestBuildCustomizer implements BuildCustomizer<Build> {
 
 	@Override
 	public void customize(Build build) {
-		if (build.dependencies().has("native")) {
-			VersionReference picocliVersion = build.dependencies().get("picocli").getVersion();
-			Dependency picocliCodegen = Dependency.withCoordinates("info.picocli", "picocli-codegen")
-				.scope(DependencyScope.ANNOTATION_PROCESSOR)
-				.version(picocliVersion)
-				.build();
-			build.dependencies().add("picocli-codegen", picocliCodegen);
-		}
+		build.dependencies()
+			.add("spring-shell-starter-test",
+					Dependency.withCoordinates("org.springframework.shell", "spring-shell-starter-test")
+						.scope(DependencyScope.TEST_COMPILE));
 	}
 
 }

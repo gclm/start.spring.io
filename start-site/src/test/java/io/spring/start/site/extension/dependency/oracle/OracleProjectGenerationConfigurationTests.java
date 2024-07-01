@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class OracleProjectGenerationConfigurationTests extends AbstractExtensionTests {
 
+	private static final String SPRING_BOOT_VERSION = "3.2.0";
+
 	@Test
 	void doesNotGenerateComposeYamlWithoutDockerCompose() {
 		ProjectRequest request = createProjectRequest("web", "oracle");
@@ -40,35 +42,18 @@ class OracleProjectGenerationConfigurationTests extends AbstractExtensionTests {
 	}
 
 	@Test
-	void createsOracleXeServiceWithBoot31() {
-		ProjectRequest request = createProjectRequest("docker-compose", "oracle");
-		request.setBootVersion("3.1.0");
-		assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/oracle-xe.yaml"));
-	}
-
-	@Test
 	void createsOracleFreeServiceWithBoot32() {
 		ProjectRequest request = createProjectRequest("docker-compose", "oracle");
-		request.setBootVersion("3.2.0");
+		request.setBootVersion(SPRING_BOOT_VERSION);
 		assertThat(composeFile(request)).hasSameContentAs(new ClassPathResource("compose/oracle-free.yaml"));
-	}
-
-	@Test
-	void declaresOracleXeContainerBeanWithBoot31() {
-		ProjectRequest request = createProjectRequest("testcontainers", "oracle");
-		request.setBootVersion("3.1.0");
-		request.setLanguage("java");
-		assertThat(generateProject(request)).textFile("src/test/java/com/example/demo/TestDemoApplication.java")
-			.contains("import org.testcontainers.containers.OracleContainer;")
-			.contains("		return new OracleContainer(DockerImageName.parse(\"gvenzl/oracle-xe:latest\"));");
 	}
 
 	@Test
 	void declaresOracleFreeContainerBeanWithBoot32() {
 		ProjectRequest request = createProjectRequest("testcontainers", "oracle");
-		request.setBootVersion("3.2.0");
+		request.setBootVersion(SPRING_BOOT_VERSION);
 		request.setLanguage("java");
-		assertThat(generateProject(request)).textFile("src/test/java/com/example/demo/TestDemoApplication.java")
+		assertThat(generateProject(request)).textFile("src/test/java/com/example/demo/TestcontainersConfiguration.java")
 			.contains("import org.testcontainers.oracle.OracleContainer;")
 			.contains("		return new OracleContainer(DockerImageName.parse(\"gvenzl/oracle-free:latest\"));");
 	}

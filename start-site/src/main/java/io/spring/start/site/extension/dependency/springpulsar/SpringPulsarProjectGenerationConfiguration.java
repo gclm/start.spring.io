@@ -19,12 +19,10 @@ package io.spring.start.site.extension.dependency.springpulsar;
 import java.util.Map;
 
 import io.spring.initializr.generator.buildsystem.Dependency;
-import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.condition.ProjectGenerationCondition;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
-import io.spring.initializr.metadata.InitializrMetadata;
 import io.spring.start.site.container.ComposeFileCustomizer;
 import io.spring.start.site.container.DockerServiceResolver;
 import io.spring.start.site.container.ServiceConnections;
@@ -48,7 +46,6 @@ class SpringPulsarProjectGenerationConfiguration {
 	private static final String TESTCONTAINERS_CLASS_NAME = "org.testcontainers.containers.PulsarContainer";
 
 	@Bean
-	@ConditionalOnPlatformVersion("3.2.0-M3")
 	@ConditionalOnRequestedDependency("testcontainers")
 	ServiceConnectionsCustomizer pulsarServiceConnectionsCustomizer(DockerServiceResolver serviceResolver) {
 		return (serviceConnections) -> serviceResolver.doWith("pulsar",
@@ -57,19 +54,10 @@ class SpringPulsarProjectGenerationConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnPlatformVersion("3.2.0-M3")
 	@ConditionalOnRequestedDependency("docker-compose")
 	ComposeFileCustomizer pulsarComposeFileCustomizer(DockerServiceResolver serviceResolver) {
 		return (composeFile) -> serviceResolver.doWith("pulsar",
 				(service) -> composeFile.services().add("pulsar", service));
-	}
-
-	@Bean
-	@ConditionalOnPlatformVersion("[3.0.0,3.2.0-M1)")
-	@ConditionalOnRequestedDependency("cloud-stream")
-	SpringPulsarBinderBuildCustomizer pulsarBinderBuildCustomizer(InitializrMetadata metadata,
-			ProjectDescription description) {
-		return new SpringPulsarBinderBuildCustomizer(metadata, description);
 	}
 
 	static class OnPulsarDependencyCondition extends ProjectGenerationCondition {

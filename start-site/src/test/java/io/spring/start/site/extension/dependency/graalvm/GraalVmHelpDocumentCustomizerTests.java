@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for {@link GraalVmHelpDocumentCustomizer}.
  *
  * @author Stephane Nicoll
+ * @author Moritz Halbritter
  */
 class GraalVmHelpDocumentCustomizerTests extends AbstractExtensionTests {
 
@@ -47,24 +48,24 @@ class GraalVmHelpDocumentCustomizerTests extends AbstractExtensionTests {
 	@Test
 	void mavenBuildAddLinkToMavenAotPlugin() {
 		MutableProjectDescription description = new MutableProjectDescription();
-		description.setPlatformVersion(Version.parse("3.0.0-RC1"));
+		description.setPlatformVersion(Version.parse("3.2.0"));
 		HelpDocument document = customize(description, new MavenBuild());
 		assertThat(document.gettingStarted().additionalLinks().getItems()).singleElement().satisfies((link) -> {
 			assertThat(link.getDescription()).isEqualTo("Configure AOT settings in Build Plugin");
 			assertThat(link.getHref())
-				.isEqualTo("https://docs.spring.io/spring-boot/docs/3.0.0-RC1/maven-plugin/reference/htmlsingle/#aot");
+				.isEqualTo("https://docs.spring.io/spring-boot/docs/3.2.0/maven-plugin/reference/htmlsingle/#aot");
 		});
 	}
 
 	@Test
 	void gradleBuildAddLinkToGradleAotPlugin() {
 		MutableProjectDescription description = new MutableProjectDescription();
-		description.setPlatformVersion(Version.parse("3.0.0-RC1"));
+		description.setPlatformVersion(Version.parse("3.2.0"));
 		HelpDocument document = customize(description, new GradleBuild());
 		assertThat(document.gettingStarted().additionalLinks().getItems()).singleElement().satisfies((link) -> {
 			assertThat(link.getDescription()).isEqualTo("Configure AOT settings in Build Plugin");
 			assertThat(link.getHref())
-				.isEqualTo("https://docs.spring.io/spring-boot/docs/3.0.0-RC1/gradle-plugin/reference/htmlsingle/#aot");
+				.isEqualTo("https://docs.spring.io/spring-boot/docs/3.2.0/gradle-plugin/reference/htmlsingle/#aot");
 		});
 	}
 
@@ -100,6 +101,22 @@ class GraalVmHelpDocumentCustomizerTests extends AbstractExtensionTests {
 		request.setArtifactId("another-project");
 		request.setVersion("2.0.0-SNAPSHOT");
 		assertHelpDocument(request).contains("$ docker run --rm -p 8080:8080 another-project:2.0.0-SNAPSHOT");
+	}
+
+	@Test
+	void shouldDocumentGradleToolchainLimitations() {
+		ProjectRequest request = createProjectRequest("native");
+		request.setType("gradle-project");
+		assertHelpDocument(request)
+			.contains("There are some limitations regarding Native Build Tools and Gradle toolchains.");
+	}
+
+	@Test
+	void shouldNotDocumentGradleToolchainLimitationsWhenUsingMaven() {
+		ProjectRequest request = createProjectRequest("native");
+		request.setType("maven-project");
+		assertHelpDocument(request)
+			.doesNotContain("There are some limitations regarding Native Build Tools and Gradle toolchains.");
 	}
 
 	private TextAssert assertHelpDocument(ProjectRequest request) {

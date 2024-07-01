@@ -19,7 +19,6 @@ package io.spring.start.site.extension.dependency.springboot;
 import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.buildsystem.maven.MavenBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
-import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.spring.build.gradle.DevelopmentOnlyDependencyGradleBuildCustomizer;
@@ -37,30 +36,20 @@ import org.springframework.context.annotation.Configuration;
 @ProjectGenerationConfiguration
 class SpringBootProjectGenerationConfiguration {
 
-	private static final String DEVTOOLS_ID = "devtools";
-
-	private static final String DOCKER_COMPOSE_ID = "docker-compose";
-
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnBuildSystem(MavenBuildSystem.ID)
 	static class MavenConfiguration {
 
 		@Bean
-		@ConditionalOnPlatformVersion("[2.0.0,3.2.0-M1)")
-		PaketoBuilderMavenBuildCustomizer paketoBuilderMavenBuildCustomizer() {
-			return new PaketoBuilderMavenBuildCustomizer();
-		}
-
-		@Bean
-		@ConditionalOnRequestedDependency(DEVTOOLS_ID)
+		@ConditionalOnRequestedDependency("devtools")
 		OptionalDependencyMavenBuildCustomizer devToolsMavenBuildCustomizer() {
-			return new OptionalDependencyMavenBuildCustomizer(DEVTOOLS_ID);
+			return new OptionalDependencyMavenBuildCustomizer("devtools");
 		}
 
 		@Bean
-		@ConditionalOnRequestedDependency(DOCKER_COMPOSE_ID)
+		@ConditionalOnRequestedDependency("docker-compose")
 		OptionalDependencyMavenBuildCustomizer dockerComposeMavenBuildCustomizer() {
-			return new OptionalDependencyMavenBuildCustomizer(DOCKER_COMPOSE_ID);
+			return new OptionalDependencyMavenBuildCustomizer("docker-compose");
 		}
 
 	}
@@ -70,29 +59,15 @@ class SpringBootProjectGenerationConfiguration {
 	static class GradleConfiguration {
 
 		@Bean
-		@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_GROOVY)
-		@ConditionalOnPlatformVersion("[2.0.0,3.2.0-M1)")
-		PaketoBuilderGroovyDslGradleBuildCustomizer paketoBuilderGroovyDslGradleBuildCustomizer() {
-			return new PaketoBuilderGroovyDslGradleBuildCustomizer();
-		}
-
-		@Bean
-		@ConditionalOnBuildSystem(id = GradleBuildSystem.ID, dialect = GradleBuildSystem.DIALECT_KOTLIN)
-		@ConditionalOnPlatformVersion("[2.0.0,3.2.0-M1)")
-		PaketoBuilderKotlinDslGradleBuildCustomizer paketoBuilderKotlinDslGradleBuildCustomizer() {
-			return new PaketoBuilderKotlinDslGradleBuildCustomizer();
-		}
-
-		@Bean
-		@ConditionalOnRequestedDependency(DEVTOOLS_ID)
+		@ConditionalOnRequestedDependency("devtools")
 		DevelopmentOnlyDependencyGradleBuildCustomizer devToolsGradleBuildCustomizer() {
-			return new DevelopmentOnlyDependencyGradleBuildCustomizer(DEVTOOLS_ID);
+			return new DevelopmentOnlyDependencyGradleBuildCustomizer("devtools");
 		}
 
 		@Bean
-		@ConditionalOnRequestedDependency(DOCKER_COMPOSE_ID)
+		@ConditionalOnRequestedDependency("docker-compose")
 		DevelopmentOnlyDependencyGradleBuildCustomizer dockerComposeGradleBuildCustomizer() {
-			return new DevelopmentOnlyDependencyGradleBuildCustomizer(DOCKER_COMPOSE_ID);
+			return new DevelopmentOnlyDependencyGradleBuildCustomizer("docker-compose");
 		}
 
 	}

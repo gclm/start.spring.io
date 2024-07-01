@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2022 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 
-package io.spring.start.site.extension.dependency.graalvm;
-
 /**
- * Tests for {@link GraalVmGroovyDslGradleBuildCustomizer}.
- *
- * @author Stephane Nicoll
+ * Extensions for generation of projects that depend on Spring Shell.
  */
-class GraalVmGroovyDslGradleBuildCustomizerTests extends GraalVmGradleBuildCustomizerTests {
-
-	@Override
-	protected GraalVmGroovyDslGradleBuildCustomizer createCustomizer(String nbtVersion) {
-		return new GraalVmGroovyDslGradleBuildCustomizer(nbtVersion);
-	}
-
-}
+package io.spring.start.site.extension.dependency.springshell;

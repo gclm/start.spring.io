@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import io.spring.initializr.generator.buildsystem.gradle.GradleBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnBuildSystem;
 import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.io.template.MustacheTemplateRenderer;
+import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import io.spring.initializr.generator.spring.build.gradle.ConditionalOnGradleVersion;
 import io.spring.initializr.metadata.InitializrMetadata;
@@ -32,6 +33,7 @@ import io.spring.start.site.extension.dependency.springbatch.SpringBatchTestBuil
 import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityRSocketBuildCustomizer;
 import io.spring.start.site.extension.dependency.springsecurity.SpringSecurityTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.springsession.SpringSessionBuildCustomizer;
+import io.spring.start.site.extension.dependency.springshell.SpringShellTestBuildCustomizer;
 import io.spring.start.site.extension.dependency.thymeleaf.ThymeleafBuildCustomizer;
 
 import org.springframework.context.annotation.Bean;
@@ -55,8 +57,8 @@ public class DependencyProjectGenerationConfiguration {
 	}
 
 	@Bean
-	public ReactorTestBuildCustomizer reactorTestBuildCustomizer() {
-		return new ReactorTestBuildCustomizer(this.metadata);
+	public ReactorTestBuildCustomizer reactorTestBuildCustomizer(ProjectDescription description) {
+		return new ReactorTestBuildCustomizer(this.metadata, description);
 	}
 
 	@Bean
@@ -113,6 +115,12 @@ public class DependencyProjectGenerationConfiguration {
 	@ConditionalOnRequestedDependency("mybatis")
 	public MyBatisTestBuildCustomizer mybatisTestBuildCustomizer() {
 		return new MyBatisTestBuildCustomizer();
+	}
+
+	@Bean
+	@ConditionalOnRequestedDependency("spring-shell")
+	public SpringShellTestBuildCustomizer springShellTestBuildCustomizer() {
+		return new SpringShellTestBuildCustomizer();
 	}
 
 }
