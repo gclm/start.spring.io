@@ -1,0 +1,285 @@
+# Instincts generated from https://github.com/gclm/start.spring.io
+# Generated: 2026-06-10T11:45:47.913Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: start.spring.io-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/gclm/start.spring.io
+---
+
+# Start.spring.io Commit Length
+
+## Action
+
+Keep commit messages concise (~42 characters)
+
+## Evidence
+
+- Average commit message length: 42 chars
+- Based on 4 commits
+
+---
+id: start.spring.io-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/gclm/start.spring.io
+---
+
+# Start.spring.io Naming Files
+
+## Action
+
+Use PascalCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: PascalCase
+
+---
+id: start.spring.io-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/gclm/start.spring.io
+---
+
+# Start.spring.io Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: start.spring.io-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/gclm/start.spring.io
+---
+
+# Start.spring.io Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: start.spring.io-workflow-dependency-version-update
+trigger: "when doing dependency version update"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/gclm/start.spring.io
+---
+
+# Start.spring.io Workflow Dependency Version Update
+
+## Action
+
+Follow the dependency-version-update workflow:
+1. Edit the configuration or lock file to specify the new version.
+2. Commit the change with a message indicating the dependency and version.
+3. Optionally, reference a related issue or pull request.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: start-site/src/main/resources/application.yml, start-client/yarn.lock
+
+---
+id: start.spring.io-instinct-java-class-naming
+trigger: "When creating a new Java class file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Java Class Naming
+
+## Action
+
+Name the file and class using PascalCase
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.files
+- Pattern in codeStyle.namingConventions.classes
+
+---
+id: start.spring.io-instinct-java-function-naming
+trigger: "When defining a new Java method or function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Java Function Naming
+
+## Action
+
+Use camelCase for function names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.functions
+
+---
+id: start.spring.io-instinct-java-constant-naming
+trigger: "When declaring a constant in Java"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Java Constant Naming
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for constant names
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.constants
+
+---
+id: start.spring.io-instinct-java-import-style
+trigger: "When importing Java classes"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Java Import Style
+
+## Action
+
+Use relative imports
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+
+---
+id: start.spring.io-instinct-js-export-style
+trigger: "When exporting JavaScript modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Js Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+
+---
+id: start.spring.io-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Test Location
+
+## Action
+
+Place tests in a mixed location (not strictly separated from source code)
+
+## Evidence
+
+- Pattern in architecture.folderStructure.testLocation
+
+---
+id: start.spring.io-instinct-git-commit-format-freeform
+trigger: "When writing a commit message"
+confidence: 0.8
+domain: git
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Git Commit Format Freeform
+
+## Action
+
+Use a freeform message, often starting with an imperative verb (e.g., 'Update', 'Merge', 'Use') and referencing the action or dependency
+
+## Evidence
+
+- Pattern in commits.examples
+- Pattern in commits.type
+
+---
+id: start.spring.io-instinct-commit-length
+trigger: "When composing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Commit Length
+
+## Action
+
+Keep the commit message concise, around 40-50 characters
+
+## Evidence
+
+- Pattern in commits.averageLength
+
+---
+id: start.spring.io-instinct-dependency-version-update
+trigger: "When a dependency needs to be upgraded"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: gclm/start.spring.io
+---
+
+# Start.spring.io Instinct Dependency Version Update
+
+## Action
+
+Edit the relevant configuration or lock file to specify the new version, then commit the change with a message indicating the dependency and version
+
+## Evidence
+
+- Workflow: dependency-version-update
+- Files: start-site/src/main/resources/application.yml, start-client/yarn.lock
+- Commit examples: 'Update Spring AI to 2.0.0-RC2', 'Update JavaScript dependencies'
+
